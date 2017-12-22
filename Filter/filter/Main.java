@@ -1,3 +1,6 @@
+import org.math.plot.Plot2DPanel;
+
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,7 +157,7 @@ public class Main {
 //                System.out.print(original[i]);
 //                System.out.println();
 //            }
-
+            plot(signals);
         } catch (FilterException exp) {
             System.out.println(exp.getMessage());
         }
@@ -255,5 +258,13 @@ public class Main {
 
     /** Graphs an array */
     public static void plot(double[] arr) {
+        Plot2DPanel plt = new Plot2DPanel();
+        double[] x = new double[arr.length];
+        plt.addLinePlot("Signals vs Index", arr);
+        JFrame  frame= new JFrame("Histogram");
+        frame.setContentPane(plt);
+        frame.setSize(1000, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }

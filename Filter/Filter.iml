@@ -13,5 +13,6 @@
     <orderEntry type="library" name="java1" level="project" />
     <orderEntry type="library" name="jmathplot-master" level="project" />
     <orderEntry type="library" name="jmathplot-master (2)" level="project" />
+    <orderEntry type="library" name="jmathplot" level="project" />
   </component>
 </module>

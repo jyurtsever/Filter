@@ -20,8 +20,7 @@ public class Main {
 
     /**
      * Takes the name of the file as the input, ARGS[0]. Outputs
-     * a new file with the filtered array. ARGS[1] gives the
-     * starting position and Args[2] gives the ending position
+     * a graph of the processed terbulance data in the window that the user chooses
      */
     public static void main(String... args) throws IOException {
         try {
@@ -32,7 +31,8 @@ public class Main {
             int count = 0;
             int[] cols1 = new int[3];
             int[] cols2 = new int[3];
-
+            
+            //Asks the user for window size, moving average interval etc.
             Scanner inp = new Scanner(System.in);
             System.out.print("Enter moving average interval: ");
             int avgInterval = Integer.parseInt(inp.next());
@@ -104,7 +104,8 @@ public class Main {
                 movAvg1.add(a1/avgInterval);
                 movAvg2.add(a2/avgInterval);
             }
-
+            
+            //Finds offset
             int offset = clockOffSet(movAvg1,movAvg2,windowLength,startIndex);
             System.out.println(offset);
             movAvg1 = movAvg1.subList(offset, offset + windowLength);
@@ -121,12 +122,14 @@ public class Main {
             double[] noise = new double[windowLength];
             double[] complexSignals = new double[windowLength];
             double[] complexNoise = new double[windowLength];
-
+            
+            //finds unfiltered noise and signal average
             for (int i = 0; i < signals.length; i++) {
                 signals[i] = .5 * (movAvg1.get(i) + movAvg2.get(i));
                 noise[i] = .5 * (movAvg1.get(i) - movAvg2.get(i));
             }
-
+            
+            //Weiner filtering
             double[] original = signals.clone();
             fft(signals,complexSignals);
             fft(noise,complexNoise);

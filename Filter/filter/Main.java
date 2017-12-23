@@ -26,7 +26,7 @@ public class Main {
     public static void main(String... args) throws IOException {
         try {
             if (args.length == 0) {
-                throw FilterException.error("No Name of File Given");
+                throw FilterException.error("No file given - please enter the name of a file as an argument");
             }
             BufferedReader br = Utils.makeReader(args[0]);
             int count = 0;
@@ -55,15 +55,7 @@ public class Main {
                 cols2 = new int[]{15,16,17};
             }
 
-            //Writes the labels
             br.readLine(); br.readLine();
-//            String[] lbs = br.readLine().split("\t");
-//            String labels = "";
-//            for (int i = 0; i < lbs.length && !lbs[i].equals(""); i++) {
-//                labels += lbs[i] + ",";
-//            }
-//            byte[] filtered = labels.getBytes();
-//            System.out.println(labels);
             ArrayList<Double> loc1 = new ArrayList<>();
             ArrayList<Double> loc2 = new ArrayList<>();
             String line;
@@ -117,12 +109,7 @@ public class Main {
             System.out.println(offset);
             movAvg1 = movAvg1.subList(offset, offset + windowLength);
             movAvg2 = movAvg2.subList(startIndex, startIndex + windowLength);
-//            for (int i = 0; i < windowLength; i++) {
-//                System.out.print(movAvg1.get(i));
-//                System.out.print("      ");
-//                System.out.print(movAvg2.get(i));
-//                System.out.println();
-//            }
+
 
             System.out.println("Offset and moving average calculation successful, offset was "
             + String.valueOf(offset - startIndex));
@@ -139,24 +126,12 @@ public class Main {
                 signals[i] = .5 * (movAvg1.get(i) + movAvg2.get(i));
                 noise[i] = .5 * (movAvg1.get(i) - movAvg2.get(i));
             }
-//            for (int i = 0; i < windowLength; i++) {
-//                System.out.print(signals[i]);
-//                System.out.print("      ");
-//                System.out.print(noise[i]);
-//                System.out.println();
-//            }
-//            System.out.println("\n\n\n");
+
             double[] original = signals.clone();
             fft(signals,complexSignals);
             fft(noise,complexNoise);
             weiner(signals,complexSignals,noise,complexNoise, alpha);
             inversefft(signals,complexSignals);
-//            for (int i = 0; i < windowLength; i++) {
-//                System.out.print(signals[i]);
-//                System.out.print("      ");
-//                System.out.print(original[i]);
-//                System.out.println();
-//            }
             plot(signals);
         } catch (FilterException exp) {
             System.out.println(exp.getMessage());

@@ -1,5 +1,6 @@
 # Filter
 Signal Processing for Turbulence Data
+
 author: Joshua Yurtsever
 
 This program is intended to process terbulance measurements from two different devices.
